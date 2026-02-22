@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="es" data-mode="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PROBABILIDAD Y ESTADÍSTICA</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- EFECTO DE ESCANEO DE FONDO -->
+  <div class="scanline"></div>
+
+  <div class="matrix-wrapper">
+    
+    <!-- HEADER: COMANDOS DEL SISTEMA -->
+    <header class="neural-header">
+      <div class="header-main">
+        <div class="title-container">
+          <div class="glitch-title" data-text="PROBABILIDAD Y ESTADÍSTICA">PROBABILIDAD Y ESTADÍSTICA</div>
+          <div class="subtitle">app web</div>
+        </div>
+        <div class="header-actions">
+          <button id="toggleVision" class="vision-btn">MODO: <span id="visionMode">OSCURO</span></button>
+        </div>
+      </div>
+
+      <nav class="command-center">
+        <div class="input-hub">
+          <div class="hub-field">
+            <span class="hub-label">ENTRADA DE DATOS (Mínimo 20)</span>
+            <textarea id="mainBuffer">105, 112, 115, 115, 118, 122, 125, 128, 132, 135, 136, 138, 138, 140, 140, 142, 145, 148, 148, 155, 158, 160, 162, 162, 165, 168, 170, 170, 128</textarea>
+            <div id="statusPulse" class="status-tag">Estado: Listo</div>
+          </div>
+          <div class="hub-params">
+            <div class="hub-field">
+              <span class="hub-label">AMPLITUD DE CLASE</span>
+              <input id="qWidth" type="number" value="10" />
+            </div>
+            <div class="hub-btns">
+              <button id="execSync" class="matrix-btn">CALCULAR TODO</button>
+              <button id="loadX" class="matrix-btn b-sec">CARGAR DEMO</button>
+              <button id="rndFeed" class="matrix-btn b-sec">DATOS ALEATORIOS</button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- CUADRÍCULA DE NODOS -->
+    <main class="neural-grid">
+      
+      <!-- NODO 01: DEFINICIONES -->
+      <section class="node-panel">
+        <div class="node-header">
+          <span class="node-id">SECCIÓN 01</span>
+          <h3>Universo, población y muestra</h3>
+          <span class="node-type">Concepto</span>
+        </div>
+        <div class="node-body">
+          <div id="logUniverse" class="console-text"></div>
+        </div>
+      </section>
+
+      <section class="node-panel">
+        <div class="node-header">
+          <span class="node-id">SECCIÓN 02</span>
+          <h3>Censo y muestreo</h3>
+          <span class="node-type">Concepto</span>
+        </div>
+        <div class="node-body">
+          <div id="logCensus" class="console-text"></div>
+        </div>
+      </section>
+
+      <!-- NODO 03: MÉTRICAS -->
+      <section class="node-panel span-2">
+        <div class="node-header">
+          <span class="node-id">DATOS 01</span>
+          <h3>Cálculos Estadísticos</h3>
+          <span class="node-type">mín • máx • rango</span>
+        </div>
+        <div class="node-body">
+          <div class="metric-row">
+            <div class="metric-item"><span class="m-lbl">Mínimo</span><span class="m-val" id="vMin">—</span></div>
+            <div class="metric-item"><span class="m-lbl">Máximo</span><span class="m-val" id="vMax">—</span></div>
+            <div class="metric-item"><span class="m-lbl">Rango</span><span class="m-val" id="vRange">—</span></div>
+            <div class="metric-item"><span class="m-lbl">Total (n)</span><span class="m-val" id="vN">—</span></div>
+          </div>
+          <div class="metric-footer">
+            Medidas adicionales: <span id="vExtra"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- NODO 04: TALLO -->
+      <section class="node-panel">
+        <div class="node-header">
+          <span class="node-id">DATOS 02</span>
+          <h3>Diagrama de tallo y hoja</h3>
+          <span class="node-type">Enteros</span>
+        </div>
+        <div class="node-body">
+          <pre id="vStem" class="console-text"></pre>
+          <p class="node-hint">Regla: tallo = decenas, hoja = unidades (redondea a enteros).</p>
+        </div>
+      </section>
+
+      <!-- NODO 05: FRECUENCIAS -->
+      <section class="node-panel span-2">
+        <div class="node-header">
+          <span class="node-id">TABLA 01</span>
+          <h3>Tabla de frecuencias</h3>
+          <span class="node-type">fi • fr • Fi • Fr</span>
+        </div>
+        <div class="node-body" id="vTable"></div>
+      </section>
+
+      <!-- NODO 06: VISUALIZADORES -->
+      <section class="node-panel chart-node">
+        <div class="node-header">
+          <span class="node-id">GRÁFICA 01</span>
+          <h3>Histograma</h3>
+          <span class="node-type">Canvas</span>
+        </div>
+        <div class="node-body"><canvas id="cHist"></canvas></div>
+      </section>
+
+      <section class="node-panel chart-node">
+        <div class="node-header">
+          <span class="node-id">GRÁFICA 02</span>
+          <h3>Polígono de frecuencias</h3>
+          <span class="node-type">Canvas</span>
+        </div>
+        <div class="node-body"><canvas id="cPoly"></canvas></div>
+      </section>
+
+      <section class="node-panel chart-node">
+        <div class="node-header">
+          <span class="node-id">GRÁFICA 03</span>
+          <h3>Ojiva</h3>
+          <span class="node-type">Acumulada</span>
+        </div>
+        <div class="node-body"><canvas id="cOgive"></canvas></div>
+      </section>
+
+      <section class="node-panel chart-node">
+        <div class="node-header">
+          <span class="node-id">GRÁFICA 04</span>
+          <h3>Diagrama de Pareto</h3>
+          <span class="node-type">Ordenado</span>
+        </div>
+        <div class="node-body"><canvas id="cPareto"></canvas></div>
+      </section>
+
+      <!-- NODO 07: LÓGICA DE CONJUNTOS -->
+      <section class="node-panel span-2">
+        <div class="node-header">
+          <span class="node-id">LÓGICA 01</span>
+          <h3>Conjuntos (A y B)</h3>
+          <span class="node-type">∪ • ∩ • −</span>
+        </div>
+        <div class="node-body">
+          <div class="flex-input">
+            <div class="f-field"><label>Conjunto A</label><input id="iSetA" value="10,20,30,40,50" /></div>
+            <div class="f-field"><label>Conjunto B</label><input id="iSetB" value="30,40,50,60,70" /></div>
+          </div>
+          <div class="f-actions">
+            <button id="execSet" class="matrix-btn">Calcular conjuntos</button>
+            <button id="rndSet" class="matrix-btn b-sec">Datos aleatorios</button>
+          </div>
+          <pre id="oSet" class="console-text"></pre>
+        </div>
+      </section>
+
+      <!-- NODO 08: PROBABILIDAD -->
+      <section class="node-panel">
+        <div class="node-header">
+          <span class="node-id">PROBABILIDAD 01</span>
+          <h3>Experimento y Probabilidad</h3>
+          <span class="node-type">P(E)</span>
+        </div>
+        <div class="node-body">
+          <div id="vExp" class="console-text mb-10"></div>
+          <div class="flex-input">
+             <select id="iEvType">
+               <option value="ge">x ≥ k</option>
+               <option value="le">x ≤ k</option>
+               <option value="eq">x = k</option>
+             </select>
+             <input id="iEvK" type="number" value="140" />
+          </div>
+          <div class="f-actions">
+            <button id="execProb" class="matrix-btn">Calcular P(E)</button>
+            <button id="rndProb" class="matrix-btn b-sec">Datos aleatorios</button>
+          </div>
+          <pre id="oProb" class="console-text">—</pre>
+        </div>
+      </section>
+
+      <!-- NODO 09: REGLA MULTIPLICATIVA -->
+      <section class="node-panel span-2">
+        <div class="node-header">
+          <span class="node-id">PROCESOS 01</span>
+          <h3>Regla multiplicativa y Diagrama de Árbol</h3>
+          <span class="node-type">Total = a × b × c × …</span>
+        </div>
+        <div class="node-body">
+          <div class="info-block">
+            <b>Regla multiplicativa:</b> Si un proceso tiene pasos independientes y en cada paso eliges una opción, el total de combinaciones se obtiene multiplicando las opciones de cada paso.<br><br>
+            <b>Diagrama de árbol:</b> Representación gráfica de todas las combinaciones posibles.
+          </div>
+          <div class="tree-grid">
+             <div class="tree-col"><label>Paso 1 (Nombre)</label><input id="tN1" value="Servidor" /><input id="tO1" value="AWS, Azure, Google" class="mini-i" /></div>
+             <div class="tree-col"><label>Paso 2 (Nombre)</label><input id="tN2" value="Base de Datos" /><input id="tO2" value="SQL, NoSQL" class="mini-i" /></div>
+             <div class="tree-col"><label>Paso 3 (Opcional)</label><input id="tN3" value="Región" /><input id="tO3" value="US, EU" class="mini-i" /></div>
+          </div>
+          <div class="f-actions">
+            <button id="execTree" class="matrix-btn">Generar diagrama de árbol</button>
+            <button id="rndTree" class="matrix-btn b-sec">Datos aleatorios</button>
+          </div>
+          <pre id="oTree" class="console-text tree-box"></pre>
+        </div>
+      </section>
+
+      <!-- NODO 10: COMBINATORIA -->
+      <section class="node-panel">
+        <div class="node-header">
+          <span class="node-id">MATE 01</span>
+          <h3>Permutaciones y Combinaciones</h3>
+          <span class="node-type">n! • P(n,r) • C(n,r)</span>
+        </div>
+        <div class="node-body">
+          <div class="flex-input">
+            <div class="f-field"><label>Valor n (Total)</label><input id="iN" type="number" value="12" /></div>
+            <div class="f-field"><label>Valor r (Muestra)</label><input id="iR" type="number" value="4" /></div>
+          </div>
+          <div class="f-actions">
+            <button id="execCombi" class="matrix-btn">Calcular combinatoria</button>
+            <button id="rndCombi" class="matrix-btn b-sec">Datos aleatorios</button>
+          </div>
+          <pre id="oCombi" class="console-text"></pre>
+        </div>
+      </section>
+      
+    </main>
+
+    <footer class="neural-footer">
+      PRACTICA INDIVIDUAL // REALTIN.CORP C.A DE C.V 2026
+    </footer>
+  </div>
+
+  <script src="apps.js"></script>
+</body>
+</html>
