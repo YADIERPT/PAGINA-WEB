@@ -52,7 +52,8 @@ body {
   border-bottom: 2px solid var(--border-color);
   padding: 20px 40px;
   backdrop-filter: blur(15px);
-  position: sticky; top: 0; z-index: 100;
+  position: relative; /* Cambiado de sticky para evitar solapamiento */
+  z-index: 100;
 }
 .header-main { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
 .glitch-title {
